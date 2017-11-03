@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	<style type="text/css">
+		#show{
+			width: 336px;
+			height: 70px;
+		}
+		#finalshow{
+			width: 336px;
+			height: 70px;
+		}
+		.numberButton{
+
+			width: 50px;
+			height: 50px;
+			background-color:darkgoldenrod;
+			color: azure;
+			border: double;
+		}
+		#addForCaculator,#subtractForCaculator{
+			position :fixed;
+			width: 50px;
+			height: 100px;
+
+		}
+	</style>
+	</head>
+	<body>
+	<input type="text" id="show"></input></br>
+	<!--<input type="text" id="finalshow"></input>-->
+	<div id="caculatorButton">
+		<button class="numberButton" id="number1" value="1" >1</button>
+		<button class="numberButton" id="number2" value="2">2</button>
+		<button class="numberButton" id="number3" value="3">3</button>
+		<button class="numberButton" id="multiplyForCaculator" value="*">*</button>
+		<button class="numberButton" id="divideForCaculator" value="/">/</button>
+		<button class="numberButton" id="addForCaculator" value="+">+</button>
+
+		</br>
+		<button class="numberButton" id="number4" value="4">4</button>
+		<button class="numberButton" id="number5" value="5">5</button>
+		<button class="numberButton" id="number6" value="6">6</button>
+		<button class="numberButton" id="sqrtForCaculator" value="">√</button>
+		<button class="numberButton" id="powForCaculator" value="^">^</button>
+
+		</br>
+		<button class="numberButton" id="number7" value="7">7</button>
+		<button class="numberButton" id="number8" value="8">8</button>
+		<button class="numberButton" id="number9" value="9">9</button>
+		<button class="numberButton" id="leftBracket" value="(">(</button>
+		<button class="numberButton" id="rightBracket" value=")">)</button>
+		<button class="numberButton" id="subtractForCaculator" value="-">-</button>
+		</br>
+		<button class="numberButton" id="clearForCaculator" value="clear">C</button>
+		<button class="numberButton" id="number0" value="0">0</button>
+		<button class="numberButton" id="potForCaculator" value=".">.</button>
+		<button class="numberButton" id="deleteForCaculator" value="">DEL</button>
+		<button class="numberButton" id="result" value="">=</button>
+		</br>
+
+	</div>
+
+	</body>
+	<script type="text/javascript">
+		var text = document.getElementsByClassName("numberButton")
+		var result = document.getElementById("result")
+		var show = document.getElementById("show")
+		var deleteForCaculator = document.getElementById("deleteForCaculator")
+		var clearForCaculator = document.getElementById("clearForCaculator")
+		var sqrtForCaculator = document.getElementById("sqrtForCaculator")
+		var powForCaculator = document.getElementById("powForCaculator")
+		//在指定位置输入
+		for (var i=0; i<text.length;i++){
+			text[i].onclick=function addToShow(event){
+			// document.getElementById("show").value = document.getElementById("show").value+this.value
+			var range;//记录光标位置对象
+			var node = window.getSelection().anchorNode;
+			var showlen = show.value.length
+			var location  = show.selectionStart
+			// 这里判断是做是否有光标判断，因为弹出框默认是没有的
+			if(node!=null){
+					show.focus()
+	        show.value = show.value.substr(0,show.selectionStart)+this.value+show.value.substring(show.selectionStart,showlen)
+					show.setSelectionRange(location, location);
+
+		  }
+		  else{
+	　　		document.getElementById("show").value = document.getElementById("show").value+this.value
+		  }
+
+		  }
+		}
+//
+//		document.getElementById("number1").onclick=function (event){
+//			document.getElementById("show").value = document.getElementById("show").value+document.getElementById("number1").value
+//		}
+		function fianlResult(event){
+			var temp = show.value
+			temp = temp.replace('√','Math.sqrt')
+			temp = temp.replace('^','**')
+			try {
+				show.value = show.value+"="+eval(temp)
+			} catch (e) {
+				show.value = show.value+"=error"
+			}
+
+		}
+		function deleteShow(event){
+			show.value = show.value.substr(0,show.value.length-1)
+		}
+		function clearShow(event){
+			show.value = ""
+		}
+		function sqrtShow(event){
+			show.value = "√("+show.value+")"
+//			show.value = "Math.sqrt("+show.value+")"
+		}
+		result.addEventListener("click",fianlResult,false)
+		deleteForCaculator.addEventListener("click",deleteShow,false)
+		clearForCaculator.addEventListener("click",clearShow,false)
+		sqrtForCaculator.addEventListener("click",sqrtShow,false)
+	</script>
+</html>
